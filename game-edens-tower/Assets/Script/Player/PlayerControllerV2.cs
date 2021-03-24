@@ -31,6 +31,8 @@ public class PlayerControllerV2 : MonoBehaviour
     public Transform traps;
     
     private GameObject _target;
+    public bool gameEnded=false;
+
     public float minX;
     public float maxX;
     public float waitingTime = 2f;
@@ -151,7 +153,7 @@ public class PlayerControllerV2 : MonoBehaviour
         }
 
         // Wanna Attack?
-        if (bow.activeSelf==false && Input.GetButtonDown("Fire1") && _isGrounded == true && isAttacking == false && espada.activeSelf == false)
+        if (bow.activeSelf==false && Input.GetButtonDown("Fire1") && _isGrounded == true && isAttacking == false && espada.activeSelf == true)
         {
             _movement = Vector2.zero;
             
@@ -249,7 +251,13 @@ public class PlayerControllerV2 : MonoBehaviour
         }
           colPicas=0;
           //FindObjectOfType<GameManager>().endGame();
-          GameManager.instance.EndGame();
+          if(gameEnded == false) {
+            gameEnded=true;
+            Debug.Log("GAME OVER !");
+            //Debug.Log(timePlayingStr);
+            Invoke("Restart",2.5f);
+            //Restart();
+        }
         }
     }
 
@@ -280,6 +288,11 @@ private IEnumerator PatrolToTarget()
     }
     public void EnableBow(bool enable){
         bow.SetActive(enable);
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        gameEnded=false;
     }
    
 }

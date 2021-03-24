@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class PlayerHealth : MonoBehaviour
 {
 	public int totalHealth = 5;
+	public bool gameEnded=false;
+
 
 	private int health;
 
@@ -38,7 +40,14 @@ public class PlayerHealth : MonoBehaviour
 		{
 			health = 0;
 			StartCoroutine("IsDead");
-			GameManager.instance.EndGame();
+			//GameManager.instance.EndGame();
+			if(gameEnded == false) {
+            gameEnded=true;
+            Debug.Log("GAME OVER !");
+            //Debug.Log(timePlayingStr);
+            Invoke("Restart",2.5f);
+            //Restart();
+        }
 		}
 
 		Debug.Log("Player got damaged. His current health is " + health);
@@ -72,7 +81,14 @@ public class PlayerHealth : MonoBehaviour
 
 		yield return new WaitForSeconds(1f);
 		gameObject.SetActive(false);
-		GameManager.instance.EndGame();
+		//GameManager.instance.EndGame();
+		if(gameEnded == false) {
+            gameEnded=true;
+            Debug.Log("GAME OVER !");
+            //Debug.Log(timePlayingStr);
+            Invoke("Restart",2.5f);
+            //Restart();
+        }
 		
 	}
 	public int getCurrentHealth(){
@@ -81,4 +97,9 @@ public class PlayerHealth : MonoBehaviour
 	public int getOriginalHealth(){
 		return totalHealth;
 	}
+	public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        gameEnded=false;
+    }
 }

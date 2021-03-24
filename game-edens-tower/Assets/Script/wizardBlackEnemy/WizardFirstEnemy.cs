@@ -21,7 +21,7 @@ public class WizardFirstEnemy : MonoBehaviour
     public GameObject magicBall;
     public float launchForce;
     public GameObject player;
-    public GameObject dialogCloud;
+    
     float currentAngle,deltaY,deltaX;
     Vector3 startingSpeed;
     const float SCALAR_SPEED=10f;
@@ -57,11 +57,7 @@ public class WizardFirstEnemy : MonoBehaviour
         currentAngle=Mathf.Atan(deltaY/deltaX);
         float distance = target.transform.position.x - transform.position.x; //Gets their distance
         //Debug.Log("hi distance "+distance);
-        if(dialogCloud.activeSelf){
-            Debug.Log("Nube ha sido actividada");
-            _rigidbody.velocity = Vector3.zero;
-            _animator.SetBool("idle", _rigidbody.velocity == Vector2.zero);
-        }else{
+        
             if(shouldAttack == false && player.activeSelf==true)
             {
                 moving(distance);
@@ -74,7 +70,7 @@ public class WizardFirstEnemy : MonoBehaviour
             //_animator.SetBool("testing",false);
             _animator.SetBool("idle", _rigidbody.velocity == Vector2.zero);
             }
-        }
+        
     
     }
 

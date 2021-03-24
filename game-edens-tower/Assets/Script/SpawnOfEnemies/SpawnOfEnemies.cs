@@ -23,11 +23,12 @@ public class SpawnOfEnemies : MonoBehaviour
     void Update()
     {
         
-        if( allowInstantiate==true){
+        if(limit.activeSelf==false){
+            if( allowInstantiate==true){
             player.GetComponent<PlayerControllerV2>().EnableBow(false);
             amount=0;
             Vector2 pos=transform.position;
-            while(amount<3 && index<enemiesPrefabs.Length){
+            while(amount<2 && index<enemiesPrefabs.Length){
                 pos=transform.position;
                 pos.x-=(amount*1.2f);
                 GameObject skeleton= Instantiate(enemiesPrefabs[index],pos,Quaternion.identity);
@@ -38,9 +39,7 @@ public class SpawnOfEnemies : MonoBehaviour
                 if(amount==0){
                     pos.x=0.1f;
                 }else if (amount==1){
-                    pos.x*=(amount*-1f);
-                }else{
-                    pos.x*=(amount*-0.7f);
+                    pos.x-=0.2f;
                 }
                 _rigidbody.velocity = new Vector2(pos.x, _rigidbody.velocity.y);
                 amount++;
@@ -57,13 +56,13 @@ public class SpawnOfEnemies : MonoBehaviour
             }
             
         }
-        if(all%3==0 && all!=0){
+        if(all%2==0 && all!=0){
             allowInstantiate=true;
         }
-        if(index==enemiesPrefabs.Length && all==6){
-            limit.SetActive(false);
+        if(index==enemiesPrefabs.Length && all>=1){
             allowInstantiate=false;
             player.GetComponent<PlayerControllerV2>().EnableBow(true);
+        }
         }
     }
     
